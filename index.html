@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script>
+
+    const express = require('express');
+
+const bodyParser = require('body-parser');
+
+const fs = require('fs');
+
+
+
+const app = express();
+
+
+
+// Menggunakan middleware body-parser untuk membaca data dalam permintaan POST
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+
+// Menangani permintaan POST untuk menambahkan kunci dan pengguna baru
+
+app.post('/add-key', (req, res) => {
+
+  const { key, user } = req.body; // Mendapatkan kunci dan pengguna dari data permintaan
+
+
+
+  // Menambahkan kunci dan pengguna baru ke file key.txt
+
+  fs.appendFile('key.txt', `${key} ${user}\n`, 'utf8', (err) => {
+
+    if (err) {
+
+      console.error('Terjadi kesalahan dalam menambahkan kunci:', err);
+
+      res.status(500).send('Terjadi kesalahan');
+
+    } else {
+
+      console.log('Kunci baru berhasil ditambahkan!');
+
+      res.status(200).send('Kunci baru berhasil ditambahkan');
+
+    }
+
+  });
+
+});
+
+
+
+// Menjalankan server pada port tertentu
+
+app.listen(3000, () => {
+
+  console.log('Server berjalan pada port 3000');
+
+});
+
+
+
+
+
+  </script>
+
+  <title>html Simple</title>
+
+</head>
+
+<body>
+
+	<h1>html by kent</h1>
+</body>
+
+</html>
